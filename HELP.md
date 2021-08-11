@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.example.pet-clinic.pet-clinic' is invalid and this project uses 'com.example.petclinic.petclinic' instead.
+* The original package name 'com.example.pet-clinic.pet-clinic' is invalid and this project uses 'com.example.petclinic' instead.
 
 # Getting Started
 
