@@ -3,10 +3,14 @@ package com.example.petclinic.services.springdatajpa;
 import com.example.petclinic.model.Visit;
 import com.example.petclinic.repositories.VisitRepository;
 import com.example.petclinic.services.VisitService;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
+@Profile("springdatajpa")
 public class VisitServiceSDJpa implements VisitService {
     private final VisitRepository visitRepository;
 

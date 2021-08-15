@@ -5,11 +5,13 @@ import com.example.petclinic.model.Pet;
 import com.example.petclinic.services.OwnerService;
 import com.example.petclinic.services.PetService;
 import com.example.petclinic.services.PetTypeService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"})
 public class OwnerServiceMap extends AbstractServiceMap<Owner, Long> implements OwnerService {
     private final PetTypeService petTypeService;
     private final PetService petService;
@@ -64,6 +66,7 @@ public class OwnerServiceMap extends AbstractServiceMap<Owner, Long> implements 
 
     @Override
     public Owner findByLastName(String lastName) {
-        return null;
+        return super.findAll().stream()
+                .filter(owner -> owner.getLastName().equals(lastName)).findFirst().orElse(null);
     }
 }
