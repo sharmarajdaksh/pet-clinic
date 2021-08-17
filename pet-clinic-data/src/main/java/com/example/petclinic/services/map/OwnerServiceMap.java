@@ -8,6 +8,7 @@ import com.example.petclinic.services.PetTypeService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -36,7 +37,7 @@ public class OwnerServiceMap extends AbstractServiceMap<Owner, Long> implements 
         if (object == null) return null;
 
         if (object.getPets() == null) {
-            throw new RuntimeException("Pet is required");
+            object.setPets(new HashSet<Pet>());
         }
 
         object.getPets().forEach(pet -> {
