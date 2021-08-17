@@ -1,7 +1,6 @@
 package com.example.petclinic.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +11,8 @@ import java.io.Serializable;
 @Setter
 @Getter
 @MappedSuperclass
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
