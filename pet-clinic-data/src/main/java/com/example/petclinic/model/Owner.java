@@ -33,4 +33,8 @@ public class Owner extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
+
+    public boolean isNew() {
+        return this.getId() == null;
+    }
 }
