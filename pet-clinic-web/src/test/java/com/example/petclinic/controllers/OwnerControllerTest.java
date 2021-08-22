@@ -42,21 +42,21 @@ class OwnerControllerTest {
 
     @Test
     void listOwners() throws Exception {
-        when(ownerService.findAll()).thenReturn(owners);
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(owners);
 
         mockMvc.perform(get("/owners"))
                 .andExpect(status().is(200))
-                .andExpect(view().name("owners/index"))
+                .andExpect(view().name("owners/ownersList"))
                 .andExpect(model().attribute("owners", hasSize(2)));
     }
 
     @Test
     void listOwnersByIndex() throws Exception {
-        when(ownerService.findAll()).thenReturn(owners);
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(owners);
 
         mockMvc.perform(get("/owners/index"))
                 .andExpect(status().is(200))
-                .andExpect(view().name("owners/index"))
+                .andExpect(view().name("owners/ownersList"))
                 .andExpect(model().attribute("owners", hasSize(2)));
     }
 
@@ -72,7 +72,30 @@ class OwnerControllerTest {
 
     @Test
     void findOwners() throws Exception {
-        mockMvc.perform(get("/owners/find")).andExpect(view().name("notimplemented"));
+        mockMvc.perform(get("/owners/find"))
+                .andExpect(view().name("owners/findOwners"))
+                .andExpect(model().attributeExists("owner"));
         verifyNoInteractions(ownerService);
+    }
+
+    @Test
+    void processFindFormReturnMany() throws Exception {
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(owners);
+
+        mockMvc.perform(get("/owners"))
+                .andExpect(view().name("owners/ownersList"))
+                .andExpect(model().attribute("owners", hasSize(2)));
+    }
+
+    @Test
+    void processFindFormReturnOne() throws Exception {
+        Set<Owner> ownerSet = new HashSet<>();
+        ownerSet.add(Owner.builder().id(1L).build());
+        when(ownerService.findAllByLastNameLike(anyString()))
+                .thenReturn(ownerSet);
+
+        mockMvc.perform(get("/owners"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/owners/1"));
     }
 }
