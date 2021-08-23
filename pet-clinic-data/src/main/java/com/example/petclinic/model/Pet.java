@@ -1,9 +1,6 @@
 package com.example.petclinic.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -45,6 +42,9 @@ public class Pet extends BaseEntity {
         this.name = name;
         this.owner = owner;
         this.birthDate = birthDate;
-        this.visits = visits;
+
+        if (visits == null || visits.size() > 0) {
+            this.visits = visits;
+        }
     }
 }

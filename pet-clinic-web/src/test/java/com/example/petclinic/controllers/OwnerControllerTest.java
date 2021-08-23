@@ -35,8 +35,10 @@ class OwnerControllerTest {
     @BeforeEach
     void setUp() {
         owners = new HashSet<>();
-        owners.add(Owner.builder().id(1L).build());
-        owners.add(Owner.builder().id(2L).build());
+        Owner owner1 = Owner.builder().id(1L).city("Seattle").build();
+        Owner owner2 = Owner.builder().id(2L).city("Chandigarh").build();
+        owners.add(owner1);
+        owners.add(owner2);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }

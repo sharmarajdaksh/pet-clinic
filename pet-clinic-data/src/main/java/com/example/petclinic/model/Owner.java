@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
@@ -59,5 +60,9 @@ public class Owner extends Person {
             }
         }
         return null;
+    }
+
+    public boolean equals(Owner o) {
+        return super.getId() == o.getId();
     }
 }
