@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -146,5 +147,18 @@ class OwnerControllerTest {
                 .andExpect(model().attributeExists("owner"));
 
         verify(ownerService, times(1)).save(any());
+    }
+
+    @Test
+    void processFindFormEmptyReturnMany() throws Exception {
+        Set<Owner> ownerSet = new HashSet<>();
+        ownerSet.add(Owner.builder().id(1L).build());
+        ownerSet.add(Owner.builder().id(2L).build());
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(ownerSet);
+
+        mockMvc.perform(get("/owners").param("lastName", ""))
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/ownersList"))
+                .andExpect(model().attribute("selections", hasSize(2)));
     }
 }
